@@ -21,11 +21,11 @@ function App() {
       templateAreas={{ base: `"nav" "main"`, lg: `"nav nav" "aside main"` }}
       templateColumns={{ base: "1fr", lg: "200px 1fr" }}
     >
-      <GridItem area="nav">
+      <GridItem area="nav" paddingX={6} paddingY={5}>
         <NavBar />
       </GridItem>
       <Show above="lg">
-        <GridItem area="aside" paddingX={5}>
+        <GridItem area="aside" paddingX={8}>
           <GenreList
             selectedGenre={gameQuary.genre}
             onSelectGenre={(genre) => setGameQuary({ ...gameQuary, genre })}
