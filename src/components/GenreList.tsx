@@ -4,9 +4,10 @@ import resizeImage from "../services/image-url";
 
 interface Props {
   onSelectGenre: (genre: Genre) => void;
+  selectedGenre: Genre | null;
 }
 
-const GenreList = ({ onSelectGenre }: Props) => {
+const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
   const { data, loading } = useGenres();
 
   if (loading) return <Spinner />;
@@ -17,7 +18,13 @@ const GenreList = ({ onSelectGenre }: Props) => {
         <ListItem key={genre.id} paddingY="5px">
           <HStack>
             <Image boxSize="32px" borderRadius={8} src={resizeImage(genre.image_background)} />
-            <Button onClick={() => onSelectGenre(genre)} fontSize="lg" variant="link">
+            <Button
+              onClick={() => onSelectGenre(genre)}
+              fontSize="lg"
+              variant="link"
+              textDecoration={genre.id === selectedGenre?.id ? "underline" : " "}
+              fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
+            >
               {genre.name}
             </Button>
           </HStack>
