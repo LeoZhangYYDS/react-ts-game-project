@@ -1,4 +1,5 @@
 import useData from "./useData";
+import { Genre } from "./useGenres";
 
 export interface Platform {
   id: number;
@@ -14,6 +15,7 @@ export interface Game {
 }
 
 //build a custom hook，so the whole app can use to fetch games
-const useGames = () => useData<Game>("/games");
+const useGames = (selectedGenre: Genre | null) =>
+  useData<Game>("/games", { params: { genres: selectedGenre?.id } }, [selectedGenre?.id]);
 
 export default useGames;
