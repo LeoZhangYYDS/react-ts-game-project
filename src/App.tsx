@@ -1,13 +1,13 @@
 import { Grid, GridItem, HStack, Show } from "@chakra-ui/react";
-import NavBar from "./components/NavBar";
-import GameGrid from "./components/GameGrid";
-import GenreList from "./components/GenreList";
 import { useState } from "react";
-import { Genre } from "./hooks/useGenres";
-import PlatformSelector from "./components/PlatformSelector";
-import { Platform } from "./hooks/useGames";
-import SortSelector from "./components/SortSelector";
+import GameGrid from "./components/GameGrid";
 import GameHeading from "./components/GameHeading";
+import GenreList from "./components/GenreList";
+import NavBar from "./components/NavBar";
+import PlatformSelector from "./components/PlatformSelector";
+import SortSelector from "./components/SortSelector";
+import { Genre } from "./hooks/useGenres";
+import { Platform } from "./hooks/usePlatforms";
 
 export interface GameQuery {
   genre: Genre | null;
@@ -24,7 +24,9 @@ function App() {
       templateColumns={{ base: "1fr", lg: "200px 1fr" }}
     >
       <GridItem area="nav" paddingX={6} paddingY={5}>
-        <NavBar onSearch={(searchText) => setGameQuary({ ...gameQuary, searchText })} />
+        <NavBar
+          onSearch={(searchText) => setGameQuary({ ...gameQuary, searchText })}
+        />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" paddingX={8}>
@@ -39,11 +41,15 @@ function App() {
         <HStack spacing={5}>
           <PlatformSelector
             setSelectedPlatform={gameQuary.platform}
-            onSelectPlatform={(platform) => setGameQuary({ ...gameQuary, platform })}
+            onSelectPlatform={(platform) =>
+              setGameQuary({ ...gameQuary, platform })
+            }
           />
           <SortSelector
             sortOrder={gameQuary.sortOrder}
-            onSelectSortOrder={(sortOrder) => setGameQuary({ ...gameQuary, sortOrder })}
+            onSelectSortOrder={(sortOrder) =>
+              setGameQuary({ ...gameQuary, sortOrder })
+            }
           />
         </HStack>
         <GameGrid gameQuery={gameQuary} />
