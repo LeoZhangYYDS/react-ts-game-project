@@ -15,9 +15,13 @@ export interface Game {
 
 //build a custom hook，so the whole app can use to fetch games
 const useGames = (gameQuery: GameQuery) =>
+  //1. useInfiniteQuery
   useInfiniteQuery<FetchResponse<Game>, Error>({
+    //2. 设置初始页面
     initialPageParam: 1,
     queryKey: ["games", gameQuery],
+
+    //4. 设置 pageParam=1
     queryFn: ({ pageParam = 1 }) =>
       apiClient.getAll({
         params: {
@@ -25,9 +29,10 @@ const useGames = (gameQuery: GameQuery) =>
           parent_platforms: gameQuery.platform?.id,
           ordering: gameQuery.sortOrder,
           search: gameQuery.searchText,
-          page: pageParam,
+          page: pageParam, //5.
         },
       }),
+    //3. 设置翻页
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.next ? allPages.length + 1 : undefined;
     },

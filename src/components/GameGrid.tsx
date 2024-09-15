@@ -1,10 +1,16 @@
-import { Button, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Button,
+  SimpleGrid,
+  // Spinner,
+  Text,
+} from "@chakra-ui/react";
 import { GameQuery } from "../App";
 import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import GameCardContainer from "./GameCardContainer";
 import GameCardSkeleton from "./GameCardSkeleton";
 import React from "react";
+//import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   gameQuery: GameQuery;
@@ -15,14 +21,23 @@ const GameGrid = ({ gameQuery }: Props) => {
     data,
     error,
     isLoading,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
+    isFetchingNextPage, //6. import
+    fetchNextPage, //6. import
+    hasNextPage, //6. import
   } = useGames(gameQuery);
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
 
+  // const fetchedGamesCount =
+  //   data?.pages.reduce((total, page) => total + page.results.length, 0) || 0;
+
   return (
     <>
+      {/*  <InfiniteScroll
+      dataLength={fetchedGamesCount}
+       hasMore={!!hasNextPage}
+       next={() => fetchNextPage()}
+       loader={<Spinner />}
+     > */}
       {error && <Text>{error.message}</Text>}
       <SimpleGrid
         columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
@@ -35,6 +50,7 @@ const GameGrid = ({ gameQuery }: Props) => {
               <GameCardSkeleton />
             </GameCardContainer>
           ))}
+        {/* 8. map pages ，里面再 map 出每一个 game*/}
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.results.map((game) => (
@@ -45,11 +61,13 @@ const GameGrid = ({ gameQuery }: Props) => {
           </React.Fragment>
         ))}
       </SimpleGrid>
+      {/* 7. 使用6中的 import */}
       {hasNextPage && (
         <Button onClick={() => fetchNextPage()} marginY={5}>
           {isFetchingNextPage ? "Loading" : "Load More"}
         </Button>
       )}
+      {/* </InfiniteScroll> */}
     </>
   );
 };
