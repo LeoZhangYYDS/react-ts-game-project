@@ -12,10 +12,10 @@ import resizeImage from "../services/image-url";
 
 interface Props {
   onSelectGenre: (genre: Genre) => void;
-  selectedGenre: Genre | null;
+  selectedGenreId?: number;
 }
 
-const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
+const GenreList = ({ onSelectGenre, selectedGenreId }: Props) => {
   const { data, isLoading } = useGenres();
 
   if (isLoading) return <Spinner />;
@@ -42,9 +42,9 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
                 fontSize="lg"
                 variant="link"
                 textDecoration={
-                  genre.id === selectedGenre?.id ? "underline" : " "
+                  genre.id === selectedGenreId ? "underline" : " "
                 }
-                fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
+                fontWeight={genre.id === selectedGenreId ? "bold" : "normal"}
               >
                 {genre.name}
               </Button>
