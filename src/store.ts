@@ -36,8 +36,7 @@ interface GameQueryStore {
 // setGenreId、setPlatformId、setSortOrder 使用了 ...store.gameQuery，这样可以保留 gameQuery 中已有的属性，避免覆盖。
 const useGameQueryStore = create<GameQueryStore>((set) => ({
   gameQuery: {},
-  setSearchText: (searchText) =>
-    set((store) => ({ gameQuery: { searchText } })),
+  setSearchText: (searchText) => set(() => ({ gameQuery: { searchText } })),
   setGenreId: (genreId) =>
     set((store) => ({ gameQuery: { ...store.gameQuery, genreId } })),
   setPlatformId: (platformId) =>

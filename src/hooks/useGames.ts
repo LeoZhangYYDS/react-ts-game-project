@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { GameQuery } from "../App";
 import APIClient, { FetchResponse } from "../services/api-client";
 import { Platform } from "./usePlatforms";
 import ms from "ms";
+import useGameQueryStore from "../store";
 
 const apiClient = new APIClient<Game>("games");
 
@@ -15,9 +15,10 @@ export interface Game {
 }
 
 //build a custom hook，so the whole app can use to fetch games
-const useGames = (gameQuery: GameQuery) =>
+const useGames = () => {
+  const gameQuery = useGameQueryStore((s) => s.gameQuery);
   //1. useInfiniteQuery
-  useInfiniteQuery<FetchResponse<Game>, Error>({
+  return useInfiniteQuery<FetchResponse<Game>, Error>({
     //2. 设置初始页面
     initialPageParam: 1,
     queryKey: ["games", gameQuery],
@@ -39,5 +40,6 @@ const useGames = (gameQuery: GameQuery) =>
     },
     staleTime: ms("24h"),
   });
+};
 
 export default useGames;
