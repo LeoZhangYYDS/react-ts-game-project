@@ -8,6 +8,7 @@ const ExpamdableText = ({ children }: Props) => {
   const [expanded, setExpanded] = useState(false);
   //set limit
   const limit = 300;
+
   if (!children) return null;
 
   //当小于的时候直接显示
