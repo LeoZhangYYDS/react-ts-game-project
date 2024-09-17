@@ -27,6 +27,11 @@ class APIClient<T> {
     );
     return res.data;
   }
+
+  async getOne(id: string | number) {
+    const res = await axiosInstance.get<T>(this.endpoint + "/" + id);
+    return res.data;
+  }
 }
 
 export default APIClient;

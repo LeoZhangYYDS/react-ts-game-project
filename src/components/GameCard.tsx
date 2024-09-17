@@ -3,6 +3,7 @@ import { Game } from "../hooks/useGames";
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
 import resizeImage from "../services/image-url";
+import { Link } from "react-router-dom";
 
 interface Props {
   game: Game;
@@ -10,16 +11,20 @@ interface Props {
 
 const GameCard = ({ game }: Props) => {
   return (
-    <Card>
-      <Image src={resizeImage(game.background_image)} />
-      <CardBody>
-        <HStack justifyContent="space-between" marginBottom={3}>
-          <PlatformIconList platforms={game.parent_platforms.map((p) => p.platform)} />
-          <CriticScore score={game.metacritic} />
-        </HStack>
-        <Heading fontSize="2xl">{game.name}</Heading>
-      </CardBody>
-    </Card>
+    <Link to={"/games/" + game.slug}>
+      <Card height="400">
+        <Image src={resizeImage(game.background_image)} />
+        <CardBody>
+          <HStack justifyContent="space-between" marginBottom={3}>
+            <PlatformIconList
+              platforms={game.parent_platforms.map((p) => p.platform)}
+            />
+            <CriticScore score={game.metacritic} />
+          </HStack>
+          <Heading fontSize="2xl">{game.name}</Heading>
+        </CardBody>
+      </Card>
+    </Link>
   );
 };
 
