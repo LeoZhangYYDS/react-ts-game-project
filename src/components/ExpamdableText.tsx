@@ -7,7 +7,7 @@ interface Props {
 const ExpamdableText = ({ children }: Props) => {
   const [expanded, setExpanded] = useState(false);
   //set limit
-  const limit = 300;
+  const limit = 500;
 
   if (!children) return null;
 
@@ -17,7 +17,7 @@ const ExpamdableText = ({ children }: Props) => {
   //当不小于的时候
   const summary = expanded ? children : children.substring(0, limit) + "...";
   return (
-    <Text>
+    <Text marginY={5} fontSize={18}>
       {summary}
       <Button
         onClick={() => setExpanded(!expanded)} //取反
