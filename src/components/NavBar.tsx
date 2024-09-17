@@ -10,7 +10,7 @@ const NavBar = () => {
       <HStack paddingRight={4}>
         <Link to="/">
           <HStack>
-            <Image src={logo} boxSize="60px" />
+            <Image src={logo} boxSize="60px" objectFit="cover" />
             <Text
               whiteSpace="nowrap"
               fontSize="large"
